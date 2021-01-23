@@ -19,20 +19,9 @@ function main() {
 }
 
 // предпологаем, что данные введены корректно
-// в задаче сказано - "Если ответов несколько — разрешается вывести любой." 
-// не смог придумать подобного кейса, так, что вомзожно решил задачу неправильно из за того,
-// что не правильно понял условия
+
 function getStudentsRotation(studentsQueue) {
-    let noRotation = '-1 -1';
 
-    let wrongPlaces = [];
-    for (let i = 0; i < studentsQueue.length; i++) {
-        if ((i + 1) % 2 !== studentsQueue[i] % 2) {
-            wrongPlaces.push(i + 1);
-        }
-    }
-
-    return wrongPlaces.length === 2 ? wrongPlaces.join(' ') : noRotation;
 }
 
 main();

@@ -7,22 +7,20 @@ function main() {
         output: process.stdout
     });
 
-    var input;
+    var input = [];
     rl.on('line', function (inputData) {
-        input = inputData.split(' ');
+        input.push(inputData.split(' ').map(a => a = Number(a)));
     });
 
     process.stdin.on('end', () => {
-        console.log(getMaxTestsAmount(input[0], input[1]));
+        console.log(getCakeXMiddle(input.slice(1)));
         process.exit(0);
     });
 }
 
 // предпологаем, что данные введены корректно
-function getMaxTestsAmount(minNumber, maxNumber) {
+function getCakeXMiddle(cakeDots) {
 
 }
-
-module.exports = getMaxTestsAmount;
 
 main();

@@ -20,7 +20,15 @@ function main() {
 
 // предпологаем, что данные введены корректно
 function getMaxTestsAmount(minNumber, maxNumber) {
+    let resultTestsAmount = 0;
+    for (let i = minNumber; i <= maxNumber; i++) {
+        let differentNumbers = new Set(String(i).split(''));
+        if (differentNumbers.size === 1) {
+            resultTestsAmount += 1;
+        }
+    }
 
+    return resultTestsAmount;
 }
 
 module.exports = getMaxTestsAmount;
