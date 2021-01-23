@@ -1,26 +1,76 @@
-var readline = require('readline');
-var process = require('process')
+const readline = require('readline');
+const process = require('process');
+
+function findNewPlace(studentsPresentArray) {
+  const uniqePresentsArray = [];
+  for (let i = 0; i < studentsPresentArray.length; i += 1) {
+    uniqePresentsArray.push(i + 1);
+  }
+  for (let i = 0; i < uniqePresentsArray.length; i += 1) {
+    if (studentsPresentArray.indexOf(uniqePresentsArray[i]) === -1) {
+      return uniqePresentsArray[i];
+    }
+  }
+  return undefined;
+}
+
+/**
+ * @param {Number[]} studentsPresentArray Массив принадлежности подарков студентов
+ */
+function getStudentChange(studentsPresentArray) {
+  let changedPresentPlace = '';
+  const wrongPlaces = [];
+  const UnicPlaces = new Set();
+  for (let i = 0; i < studentsPresentArray.length; i += 1) {
+    if (studentsPresentArray[i] === (i + 1)) {
+      const newPlace = findNewPlace(studentsPresentArray);
+      if (newPlace) {
+        changedPresentPlace = `${i + 1} ${newPlace}`;
+        studentsPresentArray[i] = newPlace;
+      } else {
+        return '-1 -1';
+      }
+    }
+    if (UnicPlaces.has(studentsPresentArray[i])) {
+      wrongPlaces.push(i + 1);
+    }
+    UnicPlaces.add(studentsPresentArray[i]);
+  }
+  if (wrongPlaces.length === 0 && changedPresentPlace) {
+    return changedPresentPlace;
+  }
+  if (wrongPlaces.length === 2) {
+    const newPlace = findNewPlace(studentsPresentArray);
+    if (newPlace) {
+      if (newPlace !== wrongPlaces[0]) {
+        return `${wrongPlaces[0]} ${newPlace}`;
+      }
+      if (newPlace !== wrongPlaces[1]) {
+        return `${wrongPlaces[1]} ${newPlace}`;
+      }
+      return '-1 -1';
+    }
+  }
+  return '-1 -1';
+}
 
 function main() {
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
 
-    var input = [];
-    rl.on('line', function (inputData) {
-        input.push(inputData);
-    });
+  let input = [];
+  rl.on('line', (inputData) => {
+    input = (inputData.split(' ').map((a) => Number(a)));
+  });
 
-    process.stdin.on('end', () => {
-        console.log(getStudentsRotation(input[1].split(' ').map(a => a = Number(a))));
-        process.exit(0);
-    });
+  process.stdin.on('end', () => {
+    console.log(getStudentChange(input));
+    process.exit(0);
+  });
 }
 
-// предпологаем, что данные введены корректно
-function getStudentsRotation(studentsQueue) {
-
-}
+module.exports = getStudentChange;
 
 main();
